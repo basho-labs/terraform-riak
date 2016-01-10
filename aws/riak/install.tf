@@ -10,12 +10,12 @@ resource "aws_instance" "primary" {
 
     #Instance tags
     tags {
-        Name = "${var.tagName}-${var.platform}-0"
+        Name = "riak-${var.product-version}-${var.platform}-0"
     }
 
     provisioner "remote-exec" {
         inline = [
-	    "echo ${lookup(var.package, var.platform)} > /tmp/package",
+	    "echo ${lookup(var.package, concat(var.product-version, "-", var.platform))} > /tmp/package",
         ]
     }
 
@@ -46,7 +46,7 @@ resource "aws_instance" "secondary" {
 
     #Instance tags
     tags {
-        Name = "${var.tagName}-${var.platform}-${count.index + 1}"
+        Name = "riak-${var.product-version}-${var.platform}-${count.index + 1}"
     }
 
     depends_on = ["aws_instance.primary"]
@@ -54,7 +54,7 @@ resource "aws_instance" "secondary" {
     provisioner "remote-exec" {
         inline = [
             "echo ${aws_instance.primary.private_ip} > /tmp/primary_ip",
-            "echo ${lookup(var.package, var.platform)} > /tmp/package",
+            "echo ${lookup(var.package, concat(var.product-version, "-", var.platform))} > /tmp/package",
         ]
     }
 
@@ -84,7 +84,7 @@ resource "aws_instance" "final" {
 
     #Instance tags
     tags {
-	Name = "${var.tagName}-${var.platform}-${var.nodes - 1}"
+	Name = "riak-${var.product-version}-${var.platform}-${var.nodes - 1}"
     }
 
     depends_on = ["aws_instance.secondary"]
@@ -92,7 +92,7 @@ resource "aws_instance" "final" {
     provisioner "remote-exec" {
         inline = [
             "echo ${aws_instance.primary.private_ip} > /tmp/primary_ip",
-            "echo ${lookup(var.package, var.platform)} > /tmp/package",
+            "echo ${lookup(var.package, concat(var.product-version, "-", var.platform))} > /tmp/package",
         ]
     }
 
