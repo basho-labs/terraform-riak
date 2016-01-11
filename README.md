@@ -42,7 +42,7 @@ The `terraform` command references the location of the terraform config files.
 
 ### Provision clusters and the clients instance
 
-Create per product/version/platform subdirectories and a clients subdirectory:
+Create per product/version/platform subdirectories and a clients subdirectory under `working`:
 
 ```bash
 $ mkdir [TR-HOME]/working/kv-2.0.6-rhel6
@@ -57,7 +57,7 @@ $ cd [TR-HOME]/working/kv-2.0.6-rhel6
 $ terraform apply ../../aws/riak
 ```
 
-The product_version variable defaults to 'kv-2.0.6'. The platform variable defaults to 'rhel6'.
+The `product_version` variable defaults to 'kv-2.0.6'. The `platform` variable defaults to 'rhel6'.
 
 To provision the second cluster, open a second tab in your SSH client and run:
 
@@ -77,7 +77,7 @@ Take note of the public ips printed to the console at the end of each process.
 
 ### Destroying
 
-To destroy provisioned infrastructure, simply replace 'apply' with 'destroy' in the commands above. Run the command from the relevant `home` directory:
+To destroy provisioned infrastructure, simply replace 'apply' with 'destroy' in the commands above. Run the command from the relevant `working` subdirectory:
 
 ```bash
 $ cd [TR-HOME]/working/kv-2.0.6-rhel6
@@ -89,17 +89,17 @@ $ terraform destroy -var 'product-version=ts-1.0' -var 'platform=ubuntu14' ../..
 
 ### Remote command execution with Ansible
 
-Ansible ad-hoc commands can be used to execute commands against the remote instances without manually logging in. 
+Ansible can be used to execute ad-hoc commands against the remote instances without manually logging in. 
 
 You first need to activate ansible and import your key into ssh-agent:
 
 ```bash
-$ source ~/ansible/hacking/env-setup
+$ source [ANSIBLE-HOME]/hacking/env-setup
 $ ssh-agent bash
 $ ssh-add [key_path]
 ```
 
-Riak cluster command example
+Riak cluster command examples:
 
 ```bash
 $ ansible all -i '[IP],' -u "ec2-user" -m shell -a "sudo riak-admin member_status"
