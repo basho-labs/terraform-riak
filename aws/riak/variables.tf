@@ -24,7 +24,7 @@ variable "package" {
 }
 
 variable "nodes" {
-    default = "3"
+    default = "5"
     description = "The number of Riak nodes to launch."
 }
 

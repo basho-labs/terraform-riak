@@ -1,11 +1,11 @@
-output "primary_public_ip" {
+output "public_ip_1" {
     value = "${aws_instance.primary.public_ip}"
 }
 
-output "secondary_public_ips" {
+output "public_ip_2_to_n-1" {
     value = "${join(",", aws_instance.secondary.*.public_ip)}"
 }
 
-output "final_public_ip" {
+output "public_ip_n" {
     value = "${aws_instance.final.public_ip}"
 }
