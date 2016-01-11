@@ -25,7 +25,7 @@ $ git clone https://github.com/basho-labs/terraform-riak.git
 Create a `working` subdirectory to facilitate provisioning:
 
 ```bash
-$ mkdir [TR-HOME]/terraform-riak/working
+$ mkdir [TR-HOME]/working
 ```
 
 ### Security group
