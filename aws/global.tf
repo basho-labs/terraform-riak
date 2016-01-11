@@ -5,7 +5,7 @@ provider "aws" {
 }
 
 variable "platform" {
-    default = "rhel7"
+    default = "rhel6"
     description = "The OS Platform. Supported platforms are rhel6, rhel7, trusty, precise."
 }
 
