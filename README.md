@@ -1,30 +1,24 @@
-# riak-terraform
+# terraform-riak
 
-Provision Riak KV and TS clusters on EC2 with a single Terraform command. This also enables you to provision a separate instance pre-configured with the Python, Java and Erlang clients. Remote command execution with Ansible is also supported.
+terraform-riak is a tool that allows you to provision Riak KV and TS clusters on EC2 with a single command. It also enables you to provision a separate instance pre-configured with the Python, Java and Erlang clients. Remote command execution with Ansible is supported as well.
 
 ## Setup
 
-### Install Terraform
-
-See: [https://terraform.io/intro/getting-started/install.html](https://terraform.io/intro/getting-started/install.html).
-
-### Install Ansible (optional)
-
-See: [http://docs.ansible.com/ansible/intro_installation.html](http://docs.ansible.com/ansible/intro_installation.html).
-
-### Clone
+* [Install Terraform](https://terraform.io/intro/getting-started/install.html)
+* [Install Ansible](http://docs.ansible.com/ansible/intro_installation.html)
+* Clone this repo
 
 ```bash
 $ git clone https://github.com/basho-labs/terraform-riak.git
 ```
 
-### AWS configuration
+* Configure AWS access
 
-Access keys: [http://docs.aws.amazon.com/general/latest/gr/managing-aws-access-keys.html](http://docs.aws.amazon.com/general/latest/gr/managing-aws-access-keys.html)
+  * Access keys: [http://docs.aws.amazon.com/general/latest/gr/managing-aws-access-keys.html](http://docs.aws.amazon.com/general/latest/gr/managing-aws-access-keys.html)
 
-Key pair: [http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html)
+  * Key pair: [http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html)
 
-Update the key_name, key_path, aws_access_key and aws_secret_key variables in aws/global.tf
+  * Update the key_name, key_path, aws_access_key and aws_secret_key variables in aws/global.tf
 
 ## Usage
 
