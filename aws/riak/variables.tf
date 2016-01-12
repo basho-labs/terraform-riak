@@ -37,8 +37,3 @@ variable "security_group_name" {
     default = "riak"
     description = "AWS security group name"
 }
-
-variable "tagName" {
-    default = "riakts"
-    description = "Name tag for the servers"
-}

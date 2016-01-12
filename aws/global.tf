@@ -6,15 +6,15 @@ provider "aws" {
 
 variable "platform" {
     default = "rhel6"
-    description = "The OS Platform. Supported platforms are rhel6, rhel7, trusty, precise."
+    description = "The OS Platform. Supported platforms are rhel6, rhel7, ubuntu12, ubuntu14, debian6, debian7."
 }
 
 variable "platform-base" {
     default = {
         rhel6 = "rhel"
 	rhel7 = "rhel"
-	ubuntu14 = "debian"
 	ubuntu12 = "debian"
+	ubuntu14 = "debian"
 	debian6 = "debian"
 	debian7 = "debian"
     }
@@ -24,8 +24,8 @@ variable "user" {
     default = {
 	rhel6 = "ec2-user"
         rhel7 = "ec2-user"
-	ubuntu14 = "ubuntu"
 	ubuntu12 = "ubuntu"
+	ubuntu14 = "ubuntu"
 	debian6 = "admin"
 	debian7 = "admin"
     }
@@ -36,8 +36,8 @@ variable "ami" {
     default = {
         us-east-1-rhel6 = "ami-00a11e68"
         us-east-1-rhel7 = "ami-2051294a"
+        us-east-1-ubuntu12 = "ami-0611546c"
 	us-east-1-ubuntu14 = "ami-d05e75b8"
-	us-east-1-ubuntu12 = "ami-0611546c"
 	us-east-1-debian6 = "ami-5e12dc36"
 	us-east-1-debian7 = "ami-e0efab88"
     }
