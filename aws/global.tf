@@ -44,22 +44,22 @@ variable "ami" {
 }
 
 variable "key_name" {
-    default = "basho-aws-us-east2"
+    default = ""
     description = "SSH key name in your AWS account for AWS instances."
 }
 
 variable "key_path" {
-    default = "/home/vagrant/.ssh/basho-aws-us-east2.pem"
+    default = ""
     description = "Path to the private key specified by key_name."
 }
 
 variable "aws_access_key" {
-    default = "AKIAI3MEITMDDTBAMQSQ"
+    default = ""
     description = "AWS access key."
 }
 
 variable "aws_secret_key" {
-    default = "b/keH4gFgERz12K3Eai7Q+zGZG8PJ1f4Oy1gO+4u"
+    default = ""
     description = "AWS secret key."
 }
 
