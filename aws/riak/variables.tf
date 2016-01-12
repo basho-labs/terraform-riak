@@ -19,6 +19,13 @@ variable "package" {
         ts-1.0-debian6 = "http://s3.amazonaws.com/private.downloads.basho.com/riak_ts/a7b9fc/1.0.0/debian/6/riak-ts_1.0.0-1_amd64.deb"
         ts-1.0-debian7 = "http://s3.amazonaws.com/private.downloads.basho.com/riak_ts/a7b9fc/1.0.0/debian/7/riak-ts_1.0.0-1_amd64.deb"
 
+        ts-1.1-rhel6 = "http://s3.amazonaws.com/private.downloads.basho.com/riak_ts/c0a39d/1.1/1.1.0/rhel/6/riak-ts-1.1.0-1.el6.x86_64.rpm"
+        ts-1.1-rhel7 = "http://s3.amazonaws.com/private.downloads.basho.com/riak_ts/c0a39d/1.1/1.1.0/rhel/7/riak-ts-1.1.0-1.el7.centos.x86_64.rpm"
+        ts-1.1-ubuntu12 = "http://s3.amazonaws.com/private.downloads.basho.com/riak_ts/c0a39d/1.1/1.1.0/ubuntu/precise/riak-ts_1.1.0-1_amd64.deb"
+        ts-1.1-ubuntu14 = "http://s3.amazonaws.com/private.downloads.basho.com/riak_ts/c0a39d/1.1/1.1.0/ubuntu/trusty/riak-ts_1.1.0-1_amd64.deb"
+        ts-1.1-debian6 = "http://s3.amazonaws.com/private.downloads.basho.com/riak_ts/c0a39d/1.1/1.1.0/debian/6/riak-ts_1.1.0-1_amd64.deb"
+        ts-1.1-debian7 = "http://s3.amazonaws.com/private.downloads.basho.com/riak_ts/c0a39d/1.1/1.1.0/debian/7/riak-ts_1.1.0-1_amd64.deb"
+
     }
     description = "Per product/version/platform package paths."
 }
