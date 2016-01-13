@@ -4,6 +4,8 @@ terraform-riak is a tool that allows you to provision Riak KV and TS clusters on
 
 ## Setup
 
+(This [gist](https://gist.github.com/rcgenova/589102cf4ed66e0178c9) has a concise set of commands that will get you up and running quickly in a Vagrant CentOS7 environment.)
+
 * [Install Terraform](https://terraform.io/intro/getting-started/install.html)
 * [Install Ansible](http://docs.ansible.com/ansible/intro_installation.html)
 * Clone this repo
