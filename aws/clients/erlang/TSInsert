@@ -6,10 +6,10 @@ main(Args) ->
   code:add_path("./riak-erlang-client/deps/riak_pb/ebin"),
   code:add_path("./riak-erlang-client/deps/protobuffs/ebin"),
   code:add_path("./riak-erlang-client/deps/meck/ebin"),
-  io:format("~s~n", [code:which(riakc_pb_socket)]),
-  io:format("~s~n", [code:which(riak_pb_ts_codec)]),
-  io:format("~s~n", [Arg1]),
-  io:format("~s~n", [Arg2]),
+  %% io:format("~s~n", [code:which(riakc_pb_socket)]),
+  %% io:format("~s~n", [code:which(riak_pb_ts_codec)]),
+  %% io:format("~s~n", [Arg1]),
+  %% io:format("~s~n", [Arg2]),
 
   {ok, Pid} = riakc_pb_socket:start_link(Arg1, 8087),
 
