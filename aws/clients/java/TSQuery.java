@@ -64,7 +64,7 @@ boolean success = true;
 try {
     queryResult = client.execute(query);
 } catch (Exception e) {
-    System.err.println("ERROR: " + e.getMessage());
+    System.err.println("ERROR - ## Use integer for a column that is defined as double: " + e.getMessage());
     System.out.println();
     success = false;
 }
@@ -178,7 +178,7 @@ success = true;
 try {
     queryResult = client.execute(query);
 } catch (Exception e) {
-    System.err.println("ERROR: " + e.getMessage());
+    System.err.println("ERROR - ## do not use series in the query: " + e.getMessage());
     System.out.println();
     success = false;
 }
@@ -202,7 +202,7 @@ success = true;
 try {
     queryResult = client.execute(query);
 } catch (Exception e) {
-    System.err.println("ERROR: " + e.getMessage());
+    System.err.println("ERROR - ## use unbounded time: " + e.getMessage());
     System.out.println();
     success = false;
 }
@@ -226,7 +226,7 @@ success = true;
 try {
     queryResult = client.execute(query);
 } catch (Exception e) {
-    System.err.println("ERROR: " + e.getMessage());
+    System.err.println("ERROR - ## do not use parenthesis: " + e.getMessage());
     System.out.println();
     success = false;
 }
@@ -445,7 +445,7 @@ success = true;
 try {
     queryResult = client.execute(query);
 } catch (Exception e) {
-    System.err.println("ERROR: " + e.getMessage());
+    System.err.println("ERROR - ## arithmetic: " + e.getMessage());
     System.out.println();
     success = false;
 }
