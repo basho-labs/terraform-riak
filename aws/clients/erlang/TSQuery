@@ -63,21 +63,6 @@ io:fwrite("select time, weather, temperature from " ++ Arg2 ++ " where myfamily 
 io:format("~p~n", [riakc_ts:query(Pid, "select time, weather, temperature from " ++ Arg2 ++ " where myfamily = 'family1' and myseries = 'series1' and time >= 1420113600000 and time <= 1420119300000 and temperature != 25.0")]),
 io:fwrite("~n", []),
 
-io:fwrite("## do not use series in the query (will fail)~n", []),
-io:fwrite("select time, weather, temperature from " ++ Arg2 ++ " where myfamily = 'family1' and time >= 1420113600000 and time <= 1420119300000 and temperature > 25.0~n", []),
-io:format("~p~n", [riakc_ts:query(Pid, "select time, weather, temperature from " ++ Arg2 ++ " where myfamily = 'family1' and time >= 1420113600000 and time <= 1420119300000 and temperature > 25.0")]),
-io:fwrite("~n", []),
-
-io:fwrite("## use unbounded time (will fail)~n", []),
-io:fwrite("select time, weather, temperature from " ++ Arg2 ++ " where myfamily = 'family1' and myseries = 'series1' and time >= 1420113600000 and temperature > 25.0~n", []),
-io:format("~p~n", [riakc_ts:query(Pid, "select time, weather, temperature from " ++ Arg2 ++ " where myfamily = 'family1' and myseries = 'series1' and time >= 1420113600000 and temperature > 25.0")]),
-io:fwrite("~n", []),
-
-io:fwrite("## do not use parenthesis (will fail)~n", []),
-io:fwrite("select time, weather, temperature from " ++ Arg2 ++ " where myfamily = 'family1' and myseries = 'series1' and time >= 1420113600000 and time <= 1420119300000 and temperature > 25.0 OR weather = 'hot'~n", []),
-io:format("~p~n", [riakc_ts:query(Pid, "select time, weather, temperature from " ++ Arg2 ++ " where myfamily = 'family1' and myseries = 'series1' and time >= 1420113600000 and time <= 1420119300000 and temperature > 25.0 OR weather = 'hot'")]),
-io:fwrite("~n", []),
-
 io:fwrite("## use parenthesis~n", []),
 io:fwrite("select time, weather, temperature from " ++ Arg2 ++ " where myfamily = 'family1' and myseries = 'series1' and time >= 1420113600000 and time <= 1420119300000 and (temperature > 25.0 OR weather = 'hot')~n", []),
 io:format("~p~n", [riakc_ts:query(Pid, "select time, weather, temperature from " ++ Arg2 ++ " where myfamily = 'family1' and myseries = 'series1' and time >= 1420113600000 and time <= 1420119300000 and (temperature > 25.0 OR weather = 'hot')")]),
@@ -141,9 +126,4 @@ io:fwrite("~n", []),
 io:fwrite("## arithmetic - operations~n", []),
 io:fwrite("select temperature, temperature + 5, temperature - 5, temperature * 2, temperature / 2, -temperature, (temperature + 5)/2, (temperature * 10)/(2 - 100) from  " ++ Arg2 ++ " where myfamily = 'family1' and myseries = 'series1' and time >= 1420113600000 and time <= 1420119300000~n", []),
 io:format("~p~n", [riakc_ts:query(Pid, "select temperature, temperature + 5, temperature - 5, temperature * 2, temperature / 2, -temperature, (temperature + 5)/2, (temperature * 10)/(2 - 100) from  " ++ Arg2 ++ " where myfamily = 'family1' and myseries = 'series1' and time >= 1420113600000 and time <= 1420119300000")]),
-io:fwrite("~n", []),
-
-io:fwrite("## arithmetic (will fail)~n", []),
-io:fwrite("select temperature + weather from  " ++ Arg2 ++ " where myfamily = 'family1' and myseries = 'series1' and time >= 1420113600000 and time <= 1420119300000~n", []),
-io:format("~p~n", [riakc_ts:query(Pid, "select temperature + weather from  " ++ Arg2 ++ " where myfamily = 'family1' and myseries = 'series1' and time >= 1420113600000 and time <= 1420119300000")]),
 io:fwrite("~n", []).

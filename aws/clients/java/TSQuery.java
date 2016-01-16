@@ -56,30 +56,6 @@ System.out.println();
 System.out.format("<Found %d records>%n", rows.size());
 System.out.println();
 
-System.out.println("## Use integer for a column that is defined as double (will fail)");
-queryText = "select time, weather, temperature from " + args[1] + " where myfamily = 'family1' and myseries = 'series1' and time >= 1420113600000 and time <= 1420119300000 and temperature > 25";
-System.out.println(queryText);
-query = new Query.Builder(queryText).build();
-boolean success = true;
-try {
-    queryResult = client.execute(query);
-} catch (Exception e) {
-    System.err.println("ERROR - ## Use integer for a column that is defined as double: " + e.getMessage());
-    System.out.println();
-    success = false;
-}
-if (success) {
-rows = queryResult.getRowsCopy();
-System.out.println();
-for (Row row : rows)
-{
-    System.out.format(" %10d, %7s, %3.1f %n", row.getCellsCopy().get(0).getTimestamp(), row.getCellsCopy().get(1).getVarcharAsUTF8String(), row.getCellsCopy().get(2).getDouble());
-}
-System.out.println();
-System.out.format("<Found %d records>%n", rows.size());
-System.out.println();
-}
-
 System.out.println("## use >");
 queryText = "select time, weather, temperature from " + args[1] + " where myfamily = 'family1' and myseries = 'series1' and time >= 1420113600000 and time <= 1420119300000 and temperature > 25.0";
 System.out.println(queryText);
@@ -169,78 +145,6 @@ for (Row row : rows)
 System.out.println();
 System.out.format("<Found %d records>%n", rows.size());
 System.out.println();
-
-System.out.println("## do not use series in the query (will fail)");
-queryText = "select time, weather, temperature from " + args[1] + " where myfamily = 'family1' and time >= 1420113600000 and time <= 1420119300000 and temperature > 25.0";
-System.out.println(queryText);
-query = new Query.Builder(queryText).build();
-success = true;
-try {
-    queryResult = client.execute(query);
-} catch (Exception e) {
-    System.err.println("ERROR - ## do not use series in the query: " + e.getMessage());
-    System.out.println();
-    success = false;
-}
-if (success) {
-rows = queryResult.getRowsCopy();
-System.out.println();
-for (Row row : rows)
-{
-    System.out.format(" %10d, %7s, %3.1f %n", row.getCellsCopy().get(0).getTimestamp(), row.getCellsCopy().get(1).getVarcharAsUTF8String(), row.getCellsCopy().get(2).getDouble());
-}
-System.out.println();
-System.out.format("<Found %d records>%n", rows.size());
-System.out.println();
-}
-
-System.out.println("## use unbounded time (will fail)");
-queryText = "select time, weather, temperature from " + args[1] + " where myfamily = 'family1' and myseries = 'series1' and time >= 1420113600000 and temperature > 25.0";
-System.out.println(queryText);
-query = new Query.Builder(queryText).build();
-success = true;
-try {
-    queryResult = client.execute(query);
-} catch (Exception e) {
-    System.err.println("ERROR - ## use unbounded time: " + e.getMessage());
-    System.out.println();
-    success = false;
-}
-if (success) {
-rows = queryResult.getRowsCopy();
-System.out.println();
-for (Row row : rows)
-{
-    System.out.format(" %10d, %7s, %3.1f %n", row.getCellsCopy().get(0).getTimestamp(), row.getCellsCopy().get(1).getVarcharAsUTF8String(), row.getCellsCopy().get(2).getDouble());
-}
-System.out.println();
-System.out.format("<Found %d records>%n", rows.size());
-System.out.println();
-}
-
-System.out.println("## do not use parenthesis (will fail)");
-queryText = "select time, weather, temperature from " + args[1] + " where myfamily = 'family1' and myseries = 'series1' and time >= 1420113600000 and time <= 1420119300000 and temperature > 25.0 OR weather = 'hot'";
-System.out.println(queryText);
-query = new Query.Builder(queryText).build();
-success = true;
-try {
-    queryResult = client.execute(query);
-} catch (Exception e) {
-    System.err.println("ERROR - ## do not use parenthesis: " + e.getMessage());
-    System.out.println();
-    success = false;
-}
-if (success) {
-rows = queryResult.getRowsCopy();
-System.out.println();
-for (Row row : rows)
-{
-    System.out.format(" %10d, %7s, %3.1f %n", row.getCellsCopy().get(0).getTimestamp(), row.getCellsCopy().get(1).getVarcharAsUTF8String(), row.getCellsCopy().get(2).getDouble());
-}
-System.out.println();
-System.out.format("<Found %d records>%n", rows.size());
-System.out.println();
-}
 
 System.out.println("## use parenthesis");
 queryText = "select time, weather, temperature from " + args[1] + " where myfamily = 'family1' and myseries = 'series1' and time >= 1420113600000 and time <= 1420119300000 and (temperature > 25.0 OR weather = 'hot')";
@@ -437,28 +341,6 @@ System.out.println();
 System.out.format("<Found %d records>%n", rows.size());
 System.out.println();
 
-System.out.println("## arithmetic (will fail)");
-queryText = "select temperature + weather from  " + args[1] + " where myfamily = 'family1' and myseries = 'series1' and time >= 1420113600000 and time <= 1420119300000";
-System.out.println(queryText);
-query = new Query.Builder(queryText).build();
-success = true;
-try {
-    queryResult = client.execute(query);
-} catch (Exception e) {
-    System.err.println("ERROR - ## arithmetic: " + e.getMessage());
-    System.out.println();
-    success = false;
-}
-if (success) {
-rows = queryResult.getRowsCopy();
-System.out.println();
-for (Row row : rows)
-{
-    System.out.format(" %3.1f %n", row.getCellsCopy().get(0).getDouble());
-}
-System.out.println();
-System.out.format("<Found %d records>%n", rows.size());
-System.out.println();
 }
 
         client.shutdown();
