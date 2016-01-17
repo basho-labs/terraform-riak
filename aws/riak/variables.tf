@@ -1,10 +1,18 @@
 variable "product-version" {
-    default = "kv-2.0.6"
-    description = "The Riak product and version. e.g., ts-1.0, kv-2.0.6"
+    default = "kv-2.1.3"
+    description = "The Riak product and version. Options: kv-2.1.3, kv-2.0.6, ts-1.1, ts-1.0"
 }
 
 variable "package" {
     default = {
+
+        kv-2.1.3-rhel6 = "http://s3.amazonaws.com/downloads.basho.com/riak/2.1/2.1.3/rhel/6/riak-2.1.3-1.el6.x86_64.rpm"
+        kv-2.1.3-rhel7 = "http://s3.amazonaws.com/downloads.basho.com/riak/2.1/2.1.3/rhel/7/riak-2.1.3-1.el7.centos.x86_64.rpm"
+        kv-2.1.3-ubuntu12 = "http://s3.amazonaws.com/downloads.basho.com/riak/2.1/2.1.3/ubuntu/precise/riak_2.1.3-1_amd64.deb"
+        kv-2.1.3-ubuntu14 = "http://s3.amazonaws.com/downloads.basho.com/riak/2.1/2.1.3/ubuntu/trusty/riak_2.1.3-1_amd64.deb"
+        kv-2.1.3-debian6 = "http://s3.amazonaws.com/downloads.basho.com/riak/2.1/2.1.3/debian/6/riak_2.1.3-1_amd64.deb"
+        kv-2.1.3-debian7 = "http://s3.amazonaws.com/downloads.basho.com/riak/2.1/2.1.3/debian/7/riak_2.1.3-1_amd64.deb"
+
         kv-2.0.6-rhel6 = "http://s3.amazonaws.com/downloads.basho.com/riak/2.0/2.0.6/rhel/6/riak-2.0.6-1.el6.x86_64.rpm"
         kv-2.0.6-rhel7 = "http://s3.amazonaws.com/downloads.basho.com/riak/2.0/2.0.6/rhel/7/riak-2.0.6-1.el7.centos.x86_64.rpm"
         kv-2.0.6-ubuntu12 = "http://s3.amazonaws.com/downloads.basho.com/riak/2.0/2.0.6/ubuntu/precise/riak_2.0.6-1_amd64.deb"
