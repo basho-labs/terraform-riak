@@ -44,12 +44,12 @@ $ terraform apply ../../aws/security
 
 ### Provision Riak
 
-The 'terraform apply' command takes the following variables:
+The `terraform apply` command takes the following variables:
 
-product_version (default: kv-2.1.3; options: kv-2.1.3, kv-2.0.6, ts-1.1, ts-1.0)
-platform (default: rhel6; options: rhel6, rhel7, ubuntu12, ubuntu14, debian6, debian7)
-nodes (default: 5; options: must be >= 3)
-instance_type (default: t2.medium; options: any AWS instance type)
+* `product_version` (default: kv-2.1.3; options: kv-2.1.3, kv-2.0.6, ts-1.1, ts-1.0)
+* `platform` (default: rhel6; options: rhel6, rhel7, ubuntu12, ubuntu14, debian6, debian7)
+* `nodes` (default: 5; options: must be >= 3)
+* `instance_type` (default: t2.medium; options: any AWS instance type)
 
 The following will provision a Riak KV 2.1.3 cluster using the RHEL 6 package:
 
@@ -118,17 +118,19 @@ $ ansible all -i "$RIAK_IP," -u "ec2-user" -m shell -a "sudo riak-admin member_s
 
 The commands below can be used to create sample data and execute queries against a Riak TS cluster:
 
-CLIENT_IP=[CLIENT_IP]
-RIAK_IP=[RIAK_IP]
-ansible all -i "$RIAK_IP," -u "ec2-user" -m shell -a "bash ~/scripts/create_ts_bucket.sh GeoCheckin1"
-ansible all -i "$RIAK_IP," -u "ec2-user" -m shell -a "bash ~/scripts/create_ts_bucket.sh GeoCheckin2"
-ansible all -i "$RIAK_IP," -u "ec2-user" -m shell -a "bash ~/scripts/create_ts_bucket.sh GeoCheckin3"
-ansible all -i "$CLIENT_IP," -u "ubuntu" -m shell -a "python -W ignore ./scripts/python/TSInsert.py $RIAK_IP GeoCheckin1"
-ansible all -i "$CLIENT_IP," -u "ubuntu" -m shell -a "python -W ignore ./scripts/python/TSQuery.py $RIAK_IP GeoCheckin1"
-ansible all -i "$CLIENT_IP," -u "ubuntu" -m shell -a "java -cp ./scripts/java:./riak-client-2.0.3-jar-with-dependencies.jar:./slf4j-1.7.12/slf4j-jdk14-1.7.12.jar TSInsert $RIAK_IP GeoCheckin2"
-ansible all -i "$CLIENT_IP," -u "ubuntu" -m shell -a "java -cp ./scripts/java:./riak-client-2.0.3-jar-with-dependencies.jar:./slf4j-1.7.12/slf4j-jdk14-1.7.12.jar TSQuery $RIAK_IP GeoCheckin2"
-ansible all -i "$CLIENT_IP," -u "ubuntu" -m shell -a "escript ./scripts/erlang/TSInsert $RIAK_IP GeoCheckin3"
-ansible all -i "$CLIENT_IP," -u "ubuntu" -m shell -a "escript ./scripts/erlang/TSQuery $RIAK_IP GeoCheckin3"
+```bash
+$ CLIENT_IP=[CLIENT_IP]
+$ RIAK_IP=[RIAK_IP]
+$ ansible all -i "$RIAK_IP," -u "ec2-user" -m shell -a "bash ~/scripts/create_ts_bucket.sh GeoCheckin1"
+$ ansible all -i "$RIAK_IP," -u "ec2-user" -m shell -a "bash ~/scripts/create_ts_bucket.sh GeoCheckin2"
+$ ansible all -i "$RIAK_IP," -u "ec2-user" -m shell -a "bash ~/scripts/create_ts_bucket.sh GeoCheckin3"
+$ ansible all -i "$CLIENT_IP," -u "ubuntu" -m shell -a "python -W ignore ./scripts/python/TSInsert.py $RIAK_IP GeoCheckin1"
+$ ansible all -i "$CLIENT_IP," -u "ubuntu" -m shell -a "python -W ignore ./scripts/python/TSQuery.py $RIAK_IP GeoCheckin1"
+$ ansible all -i "$CLIENT_IP," -u "ubuntu" -m shell -a "java -cp ./scripts/java:./riak-client-2.0.3-jar-with-dependencies.jar:./slf4j-1.7.12/slf4j-jdk14-1.7.12.jar TSInsert $RIAK_IP GeoCheckin2"
+$ ansible all -i "$CLIENT_IP," -u "ubuntu" -m shell -a "java -cp ./scripts/java:./riak-client-2.0.3-jar-with-dependencies.jar:./slf4j-1.7.12/slf4j-jdk14-1.7.12.jar TSQuery $RIAK_IP GeoCheckin2"
+$ ansible all -i "$CLIENT_IP," -u "ubuntu" -m shell -a "escript ./scripts/erlang/TSInsert $RIAK_IP GeoCheckin3"
+$ ansible all -i "$CLIENT_IP," -u "ubuntu" -m shell -a "escript ./scripts/erlang/TSQuery $RIAK_IP GeoCheckin3"
+```
 
 Ansible ad-hoc commands require the target host's Linux user name (-u parameter above). Use "ec2-user" for RHEL-based instances, "ubuntu" for Ubuntu-based instances and "admin" for Debian-based instances.
 
