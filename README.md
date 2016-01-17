@@ -4,11 +4,9 @@ terraform-riak is a tool that allows you to provision Riak KV and TS clusters on
 
 ## Setup
 
-(This [gist](https://gist.github.com/rcgenova/589102cf4ed66e0178c9) has a concise set of commands that will get you up and running quickly in a Vagrant environment.)
-
-* [Install Terraform](https://terraform.io/intro/getting-started/install.html)
-* [Install Ansible](http://docs.ansible.com/ansible/intro_installation.html)
-* Clone this repo
+[Install Terraform](https://terraform.io/intro/getting-started/install.html)  
+[Install Ansible](http://docs.ansible.com/ansible/intro_installation.html)  
+Clone this repo  
 
 ```bash
 $ git clone https://github.com/basho-labs/terraform-riak.git
@@ -16,13 +14,15 @@ $ git clone https://github.com/basho-labs/terraform-riak.git
 
 The path to `terraform-riak` is referred to as `[TR-HOME]` below.
 
-* Configure AWS access
+Configure AWS access
 
-  * Access keys: [http://docs.aws.amazon.com/general/latest/gr/managing-aws-access-keys.html](http://docs.aws.amazon.com/general/latest/gr/managing-aws-access-keys.html)
+* Access keys: [http://docs.aws.amazon.com/general/latest/gr/managing-aws-access-keys.html](http://docs.aws.amazon.com/general/latest/gr/managing-aws-access-keys.html)
 
-  * Key pair: [http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html)
+* Key pair: [http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html)
 
-  * Update the `key_name`, `key_path`, `aws_access_key` and `aws_secret_key` variables in aws/global.tf
+* Update the `key_name`, `key_path`, `aws_access_key` and `aws_secret_key` variables in aws/global.tf
+
+(This [gist](https://gist.github.com/rcgenova/589102cf4ed66e0178c9) has a concise set of commands that will get you up and running quickly in a Vagrant environment.)
 
 ## Usage
 
@@ -59,11 +59,11 @@ $ cd [TR-HOME]/working/kv-2.1.3-rhel6
 $ terraform apply -var 'product_version=kv-2.1.3' -var 'platform=rhel6' ../../aws/riak
 ```
 
-The provision a Riak KV 2.0.6 cluster using the Ubuntu14 package:
+The provision a Riak KV 2.0.6 cluster using the Ubuntu 14 package:
 
 ```bash
-$ mkdir [TR-HOME]/working/kv-2.0.6-rhel6
-$ cd [TR-HOME]/working/kv-2.0.6-rhel6
+$ mkdir [TR-HOME]/working/kv-2.0.6-ubuntu14
+$ cd [TR-HOME]/working/kv-2.0.6-ubuntu14
 $ terraform apply -var 'product_version=kv-2.0.6' -var 'platform=ubuntu14' ../../aws/riak
 ```
 
@@ -87,7 +87,7 @@ Take note of the public ips printed to the console at the end of each process.
 
 ### Destroying
 
-To destroy provisioned infrastructure, simply replace 'apply' with 'destroy' in the commands above. Run the command from the relevant `working` subdirectory. For example:
+To destroy provisioned infrastructure, simply replace `apply` with `destroy` in the commands above. Run the command from the relevant `working` subdirectory. For example:
 
 ```bash
 $ cd [TR-HOME]/working/kv-2.1.3-rhel6
@@ -132,5 +132,5 @@ $ ansible all -i "$CLIENT_IP," -u "ubuntu" -m shell -a "escript ./scripts/erlang
 $ ansible all -i "$CLIENT_IP," -u "ubuntu" -m shell -a "escript ./scripts/erlang/TSQuery $RIAK_IP GeoCheckin3"
 ```
 
-Ansible ad-hoc commands require the target host's Linux user name (-u parameter above). Use "ec2-user" for RHEL-based instances, "ubuntu" for Ubuntu-based instances and "admin" for Debian-based instances.
+Ansible ad-hoc commands require the target host's Linux user name (`-u` parameter above). Use `ec2-user` for RHEL-based instances, `ubuntu` for Ubuntu-based instances and `admin` for Debian-based instances.
 
