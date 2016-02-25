@@ -13,9 +13,23 @@ resource "aws_instance" "primary" {
         Name = "riak-${var.product-version}-${var.platform}-0"
     }
 
+    # Generate a shared SSH key for the cluster
+    provisioner "local-exec" {
+        command = "rm -f id_rsa id_rsa.pub; ssh-keygen -P '' -f id_rsa"
+    }
+    provisioner "file" {
+        source = "id_rsa"
+        destination = "/home/${lookup(var.user, var.platform)}/.ssh/id_rsa"
+    }
+    provisioner "file" {
+        source = "id_rsa.pub"
+        destination = "/home/${lookup(var.user, var.platform)}/.ssh/id_rsa.pub"
+    }
+
     provisioner "remote-exec" {
         inline = [
-	    "echo ${lookup(var.package, concat(var.product-version, "-", var.platform))} > /tmp/package",
+            "chmod 600 /home/${lookup(var.user, var.platform)}/.ssh/id_rsa",
+            "echo ${lookup(var.package, concat(var.product-version, "-", var.platform))} > /tmp/package",
         ]
     }
 
@@ -51,8 +65,18 @@ resource "aws_instance" "secondary" {
 
     depends_on = ["aws_instance.primary"]
 
+    provisioner "file" {
+        source = "id_rsa"
+        destination = "/home/${lookup(var.user, var.platform)}/.ssh/id_rsa"
+    }
+    provisioner "file" {
+        source = "id_rsa.pub"
+        destination = "/home/${lookup(var.user, var.platform)}/.ssh/id_rsa.pub"
+    }
+
     provisioner "remote-exec" {
         inline = [
+            "chmod 600 /home/${lookup(var.user, var.platform)}/.ssh/id_rsa",
             "echo ${aws_instance.primary.private_ip} > /tmp/primary_ip",
             "echo ${lookup(var.package, concat(var.product-version, "-", var.platform))} > /tmp/package",
         ]
@@ -89,10 +113,21 @@ resource "aws_instance" "final" {
 
     depends_on = ["aws_instance.secondary"]
 
+    provisioner "file" {
+        source = "id_rsa"
+        destination = "/home/${lookup(var.user, var.platform)}/.ssh/id_rsa"
+    }
+    provisioner "file" {
+        source = "id_rsa.pub"
+        destination = "/home/${lookup(var.user, var.platform)}/.ssh/id_rsa.pub"
+    }
+
     provisioner "remote-exec" {
         inline = [
+            "chmod 600 /home/${lookup(var.user, var.platform)}/.ssh/id_rsa",
             "echo ${aws_instance.primary.private_ip} > /tmp/primary_ip",
             "echo ${lookup(var.package, concat(var.product-version, "-", var.platform))} > /tmp/package",
+            "echo ${concat(format("^riak@%s^",aws_instance.primary.private_ip),",",join(",",formatlist("^riak@%s^",aws_instance.secondary.*.private_ip)),",",format("^riak@%s^",self.private_ip))} > /tmp/cluster",
         ]
     }
 

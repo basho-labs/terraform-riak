@@ -39,3 +39,29 @@ sudo riak ping
 
 # Create scripts sub-directory
 mkdir ~/scripts
+
+# Setting up intra-cluster ssh
+if [ -f $HOME/.ssh/id_rsa.pub ]; then
+    cat $HOME/.ssh/id_rsa.pub >> $HOME/.ssh/authorized_keys
+fi
+
+# Update riak_shell
+if [ -f /tmp/cluster ]; then
+    echo "Updating riak_shell config..."
+    CLUSTER=$(cat /tmp/cluster)
+    NODES=$(cat /tmp/cluster | tr ^ ' ' | sed "s/,/ /g" | sed "s/riak@//g")
+    if [ -f /etc/riak/riak_shell.config ]; then
+        sudo mv /etc/riak/riak_shell.config /etc/riak/riak_shell.config.org
+        sed "s/'riak@127.0.0.1'/$CLUSTER/g" /etc/riak/riak_shell.config.org  | tr ^ \' | sudo tee /etc/riak/riak_shell.config
+        cat<<DONE > /tmp/sftp.batch
+lcd /etc/riak
+cd /tmp
+put riak_shell.config
+DONE
+        for i in $NODES; do
+            echo "Updating riak_shell.config on $i"
+            sftp -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -b /tmp/sftp.batch $i
+            ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no $i "sudo mv /tmp/riak_shell.config /etc/riak; sudo chown riak:riak /etc/riak/riak_shell.config"
+        done
+    fi
+fi
