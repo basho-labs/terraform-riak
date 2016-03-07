@@ -4,7 +4,13 @@ terraform-riak allows you to provision a Riak KV or a Riak TS cluster on EC2 wit
 
 ## Setup
 
-* [Install Terraform](https://terraform.io/intro/getting-started/install.html)  
+* Install Terraform: 
+
+```bash
+$ wget https://releases.hashicorp.com/terraform/0.6.8/terraform_0.6.8_linux_amd64.zip
+$ unzip terraform_0.6.8_linux_amd64.zip
+$ PATH=$PATH:[TERRAFORM_HOME]
+```
 
 * Clone terraform-riak: 
 
@@ -12,31 +18,31 @@ terraform-riak allows you to provision a Riak KV or a Riak TS cluster on EC2 wit
 $ git clone https://github.com/basho-labs/terraform-riak.git
 ```
 
-(The path to `terraform-riak` is hereafter referred to as `[TR-HOME]`)
+(The path to `terraform-riak` is hereafter referred to as `TR_HOME`)
 
 * Configure AWS access
 
   * Access keys: [http://docs.aws.amazon.com/general/latest/gr/managing-aws-access-keys.html](http://docs.aws.amazon.com/general/latest/gr/managing-aws-access-keys.html)
 
-  * Key pair: [http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html)
+  * SSH Key pair: [http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html)
 
   * Update the `key_name`, `key_path`, `aws_access_key` and `aws_secret_key` variables in aws/global.tf
 
 ## Usage
 
-* Create a `working` subdirectory:
+Create a `working` subdirectory:
 
 ```bash
-$ mkdir [TR-HOME]/working
+$ mkdir [TR_HOME]/working
 ```
 
-* Create a security group:
+### AWS security group
 
 The Riak cluster terraform configuration expects the AWS security group 'riak' to be present. The following commands will create it:
 
 ```bash
-$ mkdir [TR-HOME]/working/security
-$ cd [TR-HOME]/working/security
+$ mkdir [TR_HOME]/working/security
+$ cd [TR_HOME]/working/security
 $ terraform apply ../../aws/security
 ```
 
@@ -52,32 +58,32 @@ The `terraform apply` command takes the following variables:
 The following will use the defaults to provision a Riak KV 2.1.3 cluster using the RHEL 6 package:
 
 ```bash
-$ mkdir [TR-HOME]/working/kv-2.1.3-rhel6
-$ cd [TR-HOME]/working/kv-2.1.3-rhel6
+$ mkdir [TR_HOME]/working/kv-2.1.3-rhel6
+$ cd [TR_HOME]/working/kv-2.1.3-rhel6
 $ terraform apply ../../aws/riak
 ```
 
 To provision a Riak KV 2.0.6 cluster using the Ubuntu 14 package, do:
 
 ```bash
-$ mkdir [TR-HOME]/working/kv-2.0.6-ubuntu14
-$ cd [TR-HOME]/working/kv-2.0.6-ubuntu14
+$ mkdir [TR_HOME]/working/kv-2.0.6-ubuntu14
+$ cd [TR_HOME]/working/kv-2.0.6-ubuntu14
 $ terraform apply -var 'product_version=kv-2.0.6' -var 'platform=ubuntu14' ../../aws/riak
 ```
 
 To provision a Riak TS cluster, do:
 
 ```bash
-$ mkdir [TR-HOME]/working/ts-1.1-rhel7
-$ cd [TR-HOME]/working/ts-1.1-rhel7
+$ mkdir [TR_HOME]/working/ts-1.1-rhel7
+$ cd [TR_HOME]/working/ts-1.1-rhel7
 $ terraform apply -var 'product_version=ts-1.1' -var 'platform=rhel7' ../../aws/riak
 ```
 
 ### Provision clients instance
 
 ```bash
-$ mkdir [TR-HOME]/working/clients
-$ cd [TR-HOME]/working/clients
+$ mkdir [TR_HOME]/working/clients
+$ cd [TR_HOME]/working/clients
 $ terraform apply -var 'platform=ubuntu14' ../../aws/clients
 ```
 
@@ -88,25 +94,22 @@ Take note of the public ips printed to the console at the end of each process.
 To destroy provisioned infrastructure, simply replace `apply` with `destroy` in the commands above. Run the command from the relevant `working` subdirectory. For example:
 
 ```bash
-$ cd [TR-HOME]/working/kv-2.1.3-rhel6
+$ cd [TR_HOME]/working/kv-2.1.3-rhel6
 $ terraform destroy -var 'product_version=kv-2.1.3' -var 'platform=rhel6' ../../aws/riak
 
-$ cd [TR-HOME]/working/ts-1.1-debian7
+$ cd [TR_HOME]/working/ts-1.1-debian7
 $ terraform destroy -var 'product-version=ts-1.1' -var 'platform=debian7' ../../aws/riak
 ```
 
 ### Remote command execution with Ansible
 
-To use Ansible to execute ad-hoc commands against the remote instances. 
-
-Install & activate Ansible
-
-You first need to activate ansible and import your key into ssh-agent:
+Install & activate Ansible:
 
 ```bash
-$ source [ANSIBLE-HOME]/hacking/env-setup
+$ git clone git://github.com/ansible/ansible.git --recursive
+$ source [ANSIBLE_HOME]/hacking/env-setup
 $ ssh-agent bash
-$ ssh-add [key_path]
+$ ssh-add [PATH_TO_SSH_KEY]
 ```
 
 Riak cluster command example:
