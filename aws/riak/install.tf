@@ -10,26 +10,21 @@ resource "aws_instance" "primary" {
 
     #Instance tags
     tags {
-        Name = "riak-${var.product-version}-${var.platform}-0"
+        Name = "riak-${var.product_version}-${var.platform}-0"
     }
 
     provisioner "remote-exec" {
         inline = [
-	    "echo ${lookup(var.package, concat(var.product-version, "-", var.platform))} > /tmp/package",
+	    "echo ${lookup(var.package, concat(var.product_version, "-", var.platform))} > /tmp/package",
         ]
     }
 
     provisioner "remote-exec" {
         scripts = [
-            "${path.module}/bootstrap-${lookup(var.platform-base, var.platform)}.sh",
+            "${path.module}/bootstrap-${lookup(var.platform_base, var.platform)}.sh",
         ]
     }
 
-    # Copy scripts
-    provisioner "file" {
-        source = "${path.module}/create_ts_bucket.sh"
-        destination = "/home/${lookup(var.user, var.platform)}/scripts/create_ts_bucket.sh"
-    }
 }
 
 resource "aws_instance" "secondary" {
@@ -46,7 +41,7 @@ resource "aws_instance" "secondary" {
 
     #Instance tags
     tags {
-        Name = "riak-${var.product-version}-${var.platform}-${count.index + 1}"
+        Name = "riak-${var.product_version}-${var.platform}-${count.index + 1}"
     }
 
     depends_on = ["aws_instance.primary"]
@@ -54,22 +49,17 @@ resource "aws_instance" "secondary" {
     provisioner "remote-exec" {
         inline = [
             "echo ${aws_instance.primary.private_ip} > /tmp/primary_ip",
-            "echo ${lookup(var.package, concat(var.product-version, "-", var.platform))} > /tmp/package",
+            "echo ${lookup(var.package, concat(var.product_version, "-", var.platform))} > /tmp/package",
         ]
     }
 
     provisioner "remote-exec" {
         scripts = [
-            "${path.module}/bootstrap-${lookup(var.platform-base, var.platform)}.sh",
+            "${path.module}/bootstrap-${lookup(var.platform_base, var.platform)}.sh",
 	    "${path.module}/join.sh",
         ]
     }
 
-    # Copy scripts
-    provisioner "file" {
-        source = "${path.module}/create_ts_bucket.sh"
-        destination = "/home/${lookup(var.user, var.platform)}/scripts/create_ts_bucket.sh"
-    }
 }
 
 resource "aws_instance" "final" {
@@ -84,7 +74,7 @@ resource "aws_instance" "final" {
 
     #Instance tags
     tags {
-	Name = "riak-${var.product-version}-${var.platform}-${var.nodes - 1}"
+	Name = "riak-${var.product_version}-${var.platform}-${var.nodes - 1}"
     }
 
     depends_on = ["aws_instance.secondary"]
@@ -92,22 +82,16 @@ resource "aws_instance" "final" {
     provisioner "remote-exec" {
         inline = [
             "echo ${aws_instance.primary.private_ip} > /tmp/primary_ip",
-            "echo ${lookup(var.package, concat(var.product-version, "-", var.platform))} > /tmp/package",
+            "echo ${lookup(var.package, concat(var.product_version, "-", var.platform))} > /tmp/package",
         ]
     }
 
     provisioner "remote-exec" {
         scripts = [
-            "${path.module}/bootstrap-${lookup(var.platform-base, var.platform)}.sh",
+            "${path.module}/bootstrap-${lookup(var.platform_base, var.platform)}.sh",
 	    "${path.module}/join.sh",
 	    "${path.module}/cluster.sh",
         ]
-    }
-
-    # Copy scripts
-    provisioner "file" {
-        source = "${path.module}/create_ts_bucket.sh"
-        destination = "/home/${lookup(var.user, var.platform)}/scripts/create_ts_bucket.sh"
     }
 
 }

@@ -1,4 +1,4 @@
-variable "product-version" {
+variable "product_version" {
     default = "kv-2.1.3"
     description = "The Riak product and version. Options: kv-2.1.3, kv-2.0.6, ts-1.1, ts-1.0"
 }

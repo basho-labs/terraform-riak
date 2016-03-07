@@ -53,7 +53,3 @@ git checkout tags/2.2.0-timeseries
 
 echo "Building Erlang client..."
 make
-
-# Create per-client sub-directories
-mkdir ~/scripts ~/scripts/python ~/scripts/java ~/scripts/erlang
-

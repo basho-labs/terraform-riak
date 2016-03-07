@@ -9,7 +9,7 @@ variable "platform" {
     description = "The OS Platform. Supported platforms are rhel6, rhel7, ubuntu12, ubuntu14, debian6, debian7."
 }
 
-variable "platform-base" {
+variable "platform_base" {
     default = {
         rhel6 = "rhel"
 	rhel7 = "rhel"

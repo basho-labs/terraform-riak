@@ -34,6 +34,3 @@ echo "listener.protobuf.internal = $LOCAL_IP:8087" | sudo tee --append /etc/riak
 echo "Starting Riak..."
 sudo riak start
 sudo riak ping
-
-# Create scripts sub-directory
-mkdir ~/scripts
