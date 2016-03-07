@@ -79,7 +79,7 @@ $ cd [TR_HOME]/working/ts-1.1-rhel7
 $ terraform apply -var 'product_version=ts-1.1' -var 'platform=rhel7' ../../aws/riak
 ```
 
-### Provision clients instance
+To provision a clients instance:
 
 ```bash
 $ mkdir [TR_HOME]/working/clients
@@ -112,10 +112,11 @@ $ ssh-agent bash
 $ ssh-add [PATH_TO_SSH_KEY]
 ```
 
-Riak cluster command example:
+Command example:
 
 ```bash
 $ RIAK_IP=[RIAK_IP]
+$ ansible all -i "$RIAK_IP," -u "ec2-user" -m shell -a "sudo riak ping"
 $ ansible all -i "$RIAK_IP," -u "ec2-user" -m shell -a "sudo riak-admin member_status"
 ```
 
