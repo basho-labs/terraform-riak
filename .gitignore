@@ -4,6 +4,7 @@ terraform.tfstate
 *.backup
 ./*.tfstate
 .terraform/
+.vagrant/
 *.bak
 .*.swp
 working/
