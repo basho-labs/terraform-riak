@@ -1,3 +1,3 @@
 output "server_address" {
-    value = "${aws_instance.server.public_ip}"
+    value = "${join(",", aws_instance.server.*.public_ip)}"
 }
