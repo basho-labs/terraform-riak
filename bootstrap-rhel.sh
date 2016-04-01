@@ -28,6 +28,8 @@ KEY_NAME2=${KEY_NAME1%.*}
 sed -i "47s/.*/    default = \"$KEY_NAME2\"/" $PWD/aws/global.tf
 if [ -n "$VAGRANT_OS" ]; then
   sed -i "52s~.*~    default = \"/home/vagrant/.ssh/$KEY_NAME1\"~" $PWD/aws/global.tf
+else
+  sed -i "52s~.*~    default = \"$KEY_PATH\"~" $PWD/aws/global.tf
 fi
 sed -i "57s/.*/    default = \"$AWS_ACCESS_KEY\"/" $PWD/aws/global.tf
 sed -i "62s~.*~    default = \"$AWS_SECRET_KEY\"~" $PWD/aws/global.tf
