@@ -42,14 +42,14 @@ tar -xvf slf4j-1.7.12.tar.gz
 
 # Erlang
 
-echo "Installing Erlang client dependencies..."
-sudo apt-get install -y erlang-parsetools erlang-dev erlang-syntax-tools
-sudo apt-get install -y make
+# echo "Installing Erlang client dependencies..."
+# sudo apt-get install -y erlang-parsetools erlang-dev erlang-syntax-tools
+# sudo apt-get install -y make
 
-echo "Cloning Erlang client repo..."
-git clone git://github.com/basho/riak-erlang-client.git
-cd riak-erlang-client
-git checkout tags/2.2.0-timeseries
+# echo "Cloning Erlang client repo..."
+# git clone git://github.com/basho/riak-erlang-client.git
+# cd riak-erlang-client
+# git checkout tags/2.2.0-timeseries
 
-echo "Building Erlang client..."
-make
+# echo "Building Erlang client..."
+# make

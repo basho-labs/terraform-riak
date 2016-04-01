@@ -31,20 +31,20 @@ tar -xvf slf4j-1.7.12.tar.gz
 
 # Erlang
 
-echo "Installing Erlang dependencies..."
-sudo yum install -y autoconf gcc-c++ ncurses-devel openssl-devel glibc-devel pam-devel patch
+# echo "Installing Erlang dependencies..."
+# sudo yum install -y autoconf gcc-c++ ncurses-devel openssl-devel glibc-devel pam-devel patch
 
-curl -O https://raw.githubusercontent.com/yrashk/kerl/master/kerl
-chmod a+x kerl
-export CFLAGS="-DOPENSSL_NO_EC=1"
-KERL_CONFIGURE_OPTIONS='--disable-hipe --enable-smp-support --enable-threads --enable-kernel-poll --without-odbc'
+# curl -O https://raw.githubusercontent.com/yrashk/kerl/master/kerl
+# chmod a+x kerl
+# export CFLAGS="-DOPENSSL_NO_EC=1"
+# KERL_CONFIGURE_OPTIONS='--disable-hipe --enable-smp-support --enable-threads --enable-kernel-poll --without-odbc'
 
-echo "Building Erlang..."
-./kerl build git git://github.com/basho/otp.git OTP_R16B02_basho9 OTP_R16B02_basho9
-./kerl install OTP_R16B02_basho9 .kerl/builds/OTP_R16B02_basho9
+# echo "Building Erlang..."
+# ./kerl build git git://github.com/basho/otp.git OTP_R16B02_basho9 OTP_R16B02_basho9
+# ./kerl install OTP_R16B02_basho9 .kerl/builds/OTP_R16B02_basho9
 
-echo "Installing Erlang client..."
-git clone git://github.com/basho/riak-erlang-client.git
-cd riak-erlang-client
-git checkout tags/2.2.0-timeseries
-make
+# echo "Installing Erlang client..."
+# git clone git://github.com/basho/riak-erlang-client.git
+# cd riak-erlang-client
+# git checkout tags/2.2.0-timeseries
+# make
