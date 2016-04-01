@@ -5,18 +5,21 @@ Vagrant.configure(2) do |config|
 
   config.env.enable
 
-  # Every Vagrant development environment requires a box. You can search for
-  # boxes at https://atlas.hashicorp.com/search.
-  config.vm.box = "centos/7"
+  if ENV['VAGRANT_OS'] == 'UBUNTU' 
+      config.vm.box = "ubuntu/trusty64"
+      config.vm.provision "shell", path: "bootstrap-ubuntu.sh", args: ["#{ENV['VAGRANT_OS']}", "#{ENV['KEY_PATH']}", "#{ENV['AWS_ACCESS_KEY']}", "#{ENV['AWS_SECRET_KEY']}"]
+  else
+      config.vm.box = "puphpet/centos65-x64"
+      config.vm.provision "shell", path: "bootstrap-rhel.sh", args: "#{ENV['VAGRANT_OS']} #{ENV['KEY_PATH']} #{ENV['AWS_ACCESS_KEY']} #{ENV['AWS_SECRET_KEY']}" 
+  end
 
-  # Create a private network, which allows host-only access to the machine
-  # using a specific IP.
-  # config.vm.network "private_network", ip: "192.168.33.10"
+  config.vm.synced_folder "aws/", "/home/vagrant/aws"
+  
+  if defined? ENV['KEY_PATH']
+     file_name = File.basename("#{ENV['KEY_PATH']}")
+     config.vm.provision "file", source: ENV['KEY_PATH'], destination: "/home/vagrant/.ssh/" + file_name
+  end
 
-  config.vm.provision "file", source: "aws", destination: "/home/vagrant"
-  config.vm.provision "file", source: ".env", destination: "/home/vagrant/aws.conf"
-  config.vm.provision "shell", path: "setup.sh"
-  file_name = File.basename ENV['KEY_PATH']
-  config.vm.provision "file", source: ENV['KEY_PATH'], destination: "/home/vagrant/.ssh/" + file_name
+  config.vm.provision "shell", inline: "echo 'export PATH=\"$PATH\":/home/vagrant' >> /home/vagrant/.bashrc"
 
 end
