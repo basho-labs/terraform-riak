@@ -49,6 +49,6 @@ variable "instance_type" {
 }
 
 variable "security_group_name" {
-    default = "riak"
+    default = "default"
     description = "AWS security group name"
 }
