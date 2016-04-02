@@ -20,4 +20,9 @@ resource "aws_instance" "server" {
         ]
     }
 
+    provisioner "file" {
+	source = "${path.module}/examples/"
+	destination = "/home/${lookup(var.user, var.platform)}/examples"
+    }    
+
 }

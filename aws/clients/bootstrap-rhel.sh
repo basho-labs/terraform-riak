@@ -48,3 +48,14 @@ tar -xvf slf4j-1.7.12.tar.gz
 # cd riak-erlang-client
 # git checkout tags/2.2.0-timeseries
 # make
+
+# Examples
+
+mkdir ~/examples
+
+echo "Downloading sample data..."
+wget https://s3.amazonaws.com/files.basho.com/demos/time_series/all-data-2.tar.gz
+tar -xvf all-data-2.tar.gz
+mv all-data-2.csv examples/data.csv
+rm all-data-2.tar.gz
+

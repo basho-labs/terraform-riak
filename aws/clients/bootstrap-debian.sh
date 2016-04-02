@@ -53,3 +53,14 @@ tar -xvf slf4j-1.7.12.tar.gz
 
 # echo "Building Erlang client..."
 # make
+
+# Examples
+
+mkdir ~/examples
+
+echo "Downloading sample data..."
+wget https://s3.amazonaws.com/files.basho.com/demos/time_series/all-data-2.tar.gz
+tar -xvf all-data-2.tar.gz
+mv all-data-2.csv examples/data.csv
+rm all-data-2.tar.gz
+
