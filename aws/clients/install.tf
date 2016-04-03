@@ -3,7 +3,7 @@ resource "aws_instance" "server" {
     instance_type = "${var.instance_type}"
     key_name = "${var.key_name}"
     security_groups = ["${var.security_group_name}"]
-
+    count = "${var.count}"
     connection {
         user = "${lookup(var.user, var.platform)}"
         key_file = "${var.key_path}"
@@ -11,7 +11,7 @@ resource "aws_instance" "server" {
 
     #Instance tags
     tags {
-        Name = "${var.tagName}-${var.platform}"
+        Name = "${var.tagName}-${var.platform}-${count.index}"
     }
 
     provisioner "remote-exec" {
