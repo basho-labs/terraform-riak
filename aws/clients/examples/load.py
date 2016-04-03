@@ -1,6 +1,7 @@
 from riak.client import RiakClient
 from riak.riak_error import RiakError
 import sys
+import os
 import time
 from datetime import datetime
 import calendar
@@ -33,7 +34,7 @@ totalcount=0
 batchcount=0
 batchsize=5000
 ds=[]
-with open('data.csv', 'rU') as infile:
+with open(os.path.dirname(sys.argv[0]) + '/data.csv', 'rU') as infile:
     r=csv.reader(infile)
     for l in r:
         if l[0]!='status':
