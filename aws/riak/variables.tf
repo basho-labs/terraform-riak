@@ -1,6 +1,6 @@
 variable "product_version" {
-    default = "kv-2.1.3"
-    description = "The Riak product and version. Options: kv-2.1.3, kv-2.0.6, ts-1.1, ts-1.0"
+    default = "ts-1.2"
+    description = "The Riak product and version. Options: ts-1.2, kv-2.1.3, kv-2.0.6"
 }
 
 variable "package" {
@@ -20,19 +20,11 @@ variable "package" {
         kv-2.0.6-debian6 = "http://s3.amazonaws.com/downloads.basho.com/riak/2.0/2.0.6/debian/6/riak_2.0.6-1_amd64.deb"
         kv-2.0.6-debian7 = "http://s3.amazonaws.com/downloads.basho.com/riak/2.0/2.0.6/debian/7/riak_2.0.6-1_amd64.deb"
 
-        ts-1.0-rhel6 = ""
-        ts-1.0-rhel7 = ""
-        ts-1.0-ubuntu12 = ""
-        ts-1.0-ubuntu14 = ""
-        ts-1.0-debian6 = ""
-        ts-1.0-debian7 = ""
-
-        ts-1.1-rhel6 = ""
-        ts-1.1-rhel7 = ""
-        ts-1.1-ubuntu12 = ""
-        ts-1.1-ubuntu14 = ""
-        ts-1.1-debian6 = ""
-        ts-1.1-debian7 = ""
+        ts-1.2-rhel6 = "http://s3.amazonaws.com/private.downloads.basho.com/riak_ts/99a7df/1.2/1.2.0/rhel/6/riak-ts-1.2.0-1.el6.x86_64.rpm"
+        ts-1.2-rhel7 = "http://s3.amazonaws.com/private.downloads.basho.com/riak_ts/99a7df/1.2/1.2.0/rhel/7/riak-ts-1.2.0-1.el7.centos.x86_64.rpm"
+        ts-1.2-ubuntu12 = "http://s3.amazonaws.com/private.downloads.basho.com/riak_ts/99a7df/1.2/1.2.0/ubuntu/precise/riak-ts_1.2.0-1_amd64.deb"
+        ts-1.2-ubuntu14 = "http://s3.amazonaws.com/private.downloads.basho.com/riak_ts/99a7df/1.2/1.2.0/ubuntu/trusty/riak-ts_1.2.0-1_amd64.deb"
+        ts-1.2-debian7 = "http://s3.amazonaws.com/private.downloads.basho.com/riak_ts/99a7df/1.2/1.2.0/debian/7/riak-ts_1.2.0-1_amd64.deb"
 
     }
     description = "Per product/version/platform package paths."

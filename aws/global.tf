@@ -5,7 +5,7 @@ provider "aws" {
 }
 
 variable "platform" {
-    default = "rhel6"
+    default = "ubuntu14"
     description = "The OS Platform. Supported platforms are rhel6, rhel7, ubuntu12, ubuntu14, debian6, debian7."
 }
 
