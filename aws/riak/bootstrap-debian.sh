@@ -2,7 +2,7 @@
 set -e
 
 echo "Installing dependencies..."
-sudo apt-get update
+# sudo apt-get update
 sudo apt-get install -y curl
 
 # Set the local private ip

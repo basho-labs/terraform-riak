@@ -9,7 +9,7 @@ if [ -n "$1" ]; then
 fi
 
 echo "Installing dependencies..."
-sudo yum install -y wget unzip git gcc python-devel python-setuptools
+sudo yum install -y wget unzip git gcc python-setuptools python-devel
 sudo easy_install pip
 sudo pip install paramiko PyYAML Jinja2 httplib2 six
 

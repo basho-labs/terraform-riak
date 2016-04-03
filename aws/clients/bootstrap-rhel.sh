@@ -4,8 +4,9 @@ set -e
 # Dependencies
 
 echo "Installing dependencies..."
-sudo yum -y update
-sudo yum install -y wget git tree
+# sudo yum -y update
+sudo yum install -y wget
+# sudo yum install -y git
 
 # Python
 
