@@ -1,124 +1,148 @@
 # terraform-riak
 
-terraform-riak allows you to provision a Riak KV or a Riak TS cluster on EC2 with a single Terraform command. You can also provision a separate instance pre-configured with the Python, Java and Erlang clients.
+terraform-riak allows you to provision a Riak KV or a Riak TS cluster on AWS with a single Terraform command. You can also provision a separate instance pre-configured with the Python, Java and Erlang clients.
 
 ## Setup
 
-* Install Terraform: 
+### Configure AWS Access
+
+You will need to create an [AWS SSH key pair](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html) as well as a set of [access keys](http://docs.aws.amazon.com/general/latest/gr/managing-aws-access-keys.html).
+
+Set the following environment variables accordingly:
 
 ```bash
-$ wget https://releases.hashicorp.com/terraform/0.6.8/terraform_0.6.8_linux_amd64.zip
-$ unzip terraform_0.6.8_linux_amd64.zip
-$ PATH=$PATH:[TERRAFORM_HOME]
+$ export KEY_PATH=[PATH_TO_AWS_SSH_KEY]
+$ export AWS_ACCESS_KEY=[AWS_ACCESS_KEY]
+$ export AWS_SECRET_KEY=[AWS_SECRET_KEY]
 ```
 
-* Clone terraform-riak: 
+For example:
+
+```bash
+$ export KEY_PATH=$HOME/.ssh/aws-us-east.pem
+$ export AWS_ACCESS_KEY=AKIAI3MEITMDDTB00000
+$ export AWS_SECRET_KEY=b/keH4gFgERz12K3Eai7Q+zGZG8PJ1f4Oy100000
+```
+
+### Vagrant local environment
+
+The repo includes a Vagrantfile for your convenience. The OS used by Vagrant can be set using the `VAGRANT_OS` environment variable (set to `UBUNTU` or `CENTOS`).
 
 ```bash
 $ git clone https://github.com/basho-labs/terraform-riak.git
+$ cd terraform-riak
+$ export VAGRANT_OS=UBUNTU
+$ vagrant plugin install vagrant-env
+$ vagrant up
+$ vagrant ssh
 ```
 
-(The path to `terraform-riak` is hereafter referred to as `TR_HOME`)
+### Non-Vagrant local environment
 
-* Configure AWS access
+Use the relevant bootstrap script as a reference for the required dependencies or just run it as-is:
 
-  * Access keys: [http://docs.aws.amazon.com/general/latest/gr/managing-aws-access-keys.html](http://docs.aws.amazon.com/general/latest/gr/managing-aws-access-keys.html)
-
-  * SSH Key pair: [http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html)
-
-  * Update the `key_name`, `key_path`, `aws_access_key` and `aws_secret_key` variables in aws/global.tf
+```bash
+$ git clone https://github.com/basho-labs/terraform-riak.git
+$ cd terraform-riak
+$ bash bootstrap-ubuntu.sh
+$ PATH=$PATH:$PWD
+```
 
 ## Usage
 
-Create a `working` subdirectory:
+Create working subdirectories for your cluster and client(s)
 
 ```bash
-$ mkdir [TR_HOME]/working
-```
-
-### AWS security group
-
-The Riak cluster terraform configuration expects the AWS security group 'riak' to be present. The following commands will create it:
-
-```bash
-$ mkdir [TR_HOME]/working/security
-$ cd [TR_HOME]/working/security
-$ terraform apply ../../aws/security
+$ mkdir -p working/cluster working/clients
 ```
 
 ### Provision Riak
 
-The `terraform apply` command takes the following variables:
+The `terraform apply` command takes the following variables for a Riak cluster config:
 
-* `product_version` (default: kv-2.1.3; options: kv-2.1.3, kv-2.0.6, ts-1.1, ts-1.0)
-* `platform` (default: rhel6; options: rhel6, rhel7, ubuntu12, ubuntu14, debian7)
+* `product_version` (default: ts-1.2; options: ts-1.2, kv-2.1.3, kv-2.0.6)
+* `platform` (default: ubuntu14; options: rhel6, rhel7, ubuntu12, ubuntu14, debian7)
 * `nodes` (default: 5; options: must be >= 3)
 * `instance_type` (default: t2.medium; options: any AWS instance type)
 
-The following will use the defaults to provision a Riak KV 2.1.3 cluster using the RHEL 6 package:
+The following command uses the default settings to provision a 5-node Riak TS 1.2 cluster using the Ubuntu 14 package:
 
 ```bash
-$ mkdir [TR_HOME]/working/kv-2.1.3-rhel6
-$ cd [TR_HOME]/working/kv-2.1.3-rhel6
+$ cd working/cluster
 $ terraform apply ../../aws/riak
 ```
 
-To provision a Riak KV 2.0.6 cluster using the Ubuntu 14 package, do:
+To provision a Riak KV 2.1.3 cluster using the RHEL 6 package:
 
 ```bash
-$ mkdir [TR_HOME]/working/kv-2.0.6-ubuntu14
-$ cd [TR_HOME]/working/kv-2.0.6-ubuntu14
-$ terraform apply -var 'product_version=kv-2.0.6' -var 'platform=ubuntu14' ../../aws/riak
+$ terraform apply -var 'product_version=kv-2.1.3' -var 'platform=rhel6' ../../aws/riak
 ```
 
-To provision a Riak TS cluster, do:
+### Provision a client
+
+To provision a client instance, first change to the `clients` working subdirectory:
 
 ```bash
-$ mkdir [TR_HOME]/working/ts-1.1-rhel7
-$ cd [TR_HOME]/working/ts-1.1-rhel7
-$ terraform apply -var 'product_version=ts-1.1' -var 'platform=rhel7' ../../aws/riak
+$ cd working/clients
+$ terraform apply ../../aws/clients
 ```
 
-To provision a clients instance:
+You can provision multiple client instances with a single command by adding the `count` variable:
 
 ```bash
-$ mkdir [TR_HOME]/working/clients
-$ cd [TR_HOME]/working/clients
-$ terraform apply -var 'platform=ubuntu14' ../../aws/clients
+$ cd working/clients
+$ terraform apply -var 'count=2' ../../aws/clients
 ```
 
-Take note of the public ips printed to the console at the end of each process.
+Take note of the IPs printed to the console at the end of each process.
 
-### Destroying
+### Destroy infrastructure
 
 To destroy provisioned infrastructure, simply replace `apply` with `destroy` in the commands above. Run the command from the relevant `working` subdirectory. For example:
 
 ```bash
-$ cd [TR_HOME]/working/kv-2.1.3-rhel6
-$ terraform destroy -var 'product_version=kv-2.1.3' -var 'platform=rhel6' ../../aws/riak
+$ cd working/cluster
+$ terraform destroy ../../aws/riak
 
-$ cd [TR_HOME]/working/ts-1.1-debian7
-$ terraform destroy -var 'product-version=ts-1.1' -var 'platform=debian7' ../../aws/riak
+$ cd working/clients
+$ terraform destroy ../../aws/clients
 ```
 
-### Remote command execution with Ansible
+## Riak TS sample data & queries
 
-Install & activate Ansible:
+The Riak client config downloads a sample time series data file and includes example Python scripts to both load and query the data. To run the examples, first SSH in to your client instance:
 
 ```bash
-$ git clone git://github.com/ansible/ansible.git --recursive
-$ source [ANSIBLE_HOME]/hacking/env-setup
+$ ssh -i [PATH_TO_AWS_SSH_KEY] ubuntu@[CLIENT_IP]
+```
+
+Then, run:
+
+```bash
+$ export RIAK_IP=[RIAK_PRIVATE_IP]
+$ export TABLE=table1
+$ python examples/load.py $RIAK_IP $TABLE
+$ python examples/query.py $RIAK_IP $TABLE
+```
+
+You can get a `RIAK_PRIVATE_IP` from the output of the relevant `terraform apply` command. The table name `table1` is arbitrary.
+
+## Remote command execution with Ansible
+
+Ansible can be used to remotely execute ad-hoc commands against a client or the Riak cluster. Ansible is pre-installed, but requires activation:
+
+```bash
+$ source ansible/hacking/env-setup
 $ ssh-agent bash
-$ ssh-add [PATH_TO_SSH_KEY]
+$ ssh-add [PATH_TO_AWS_SSH_KEY]
 ```
 
 Command example:
 
 ```bash
-$ RIAK_IP=[RIAK_IP]
-$ ansible all -i "$RIAK_IP," -u "ec2-user" -m shell -a "sudo riak ping"
-$ ansible all -i "$RIAK_IP," -u "ec2-user" -m shell -a "sudo riak-admin member_status"
+$ RIAK_IP=[RIAK_PUBLIC_IP]
+$ ansible all -i "$RIAK_IP," -u "ubuntu" -m shell -a "sudo riak ping"
+$ ansible all -i "$RIAK_IP," -u "ubuntu" -m shell -a "sudo riak-admin member_status"
 ```
 
-Ansible ad-hoc commands require the target host's Linux user name (`-u` parameter above). Use `ec2-user` for RHEL-based instances, `ubuntu` for Ubuntu-based instances and `admin` for Debian-based instances.
-
+Ansible ad-hoc commands require the target host's Linux user name (`-u` parameter above). Use `ubuntu` for Ubuntu-based instances, `ec2-user` for RHEL-based instances and `admin` for Debian-based instances.
