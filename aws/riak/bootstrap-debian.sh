@@ -32,6 +32,7 @@ echo "Configuring Riak..."
 echo "nodename = riak@$LOCAL_IP" | sudo tee --append /etc/riak/riak.conf
 echo "listener.http.internal = $LOCAL_IP:8098" | sudo tee --append /etc/riak/riak.conf
 echo "listener.protobuf.internal = $LOCAL_IP:8087" | sudo tee --append /etc/riak/riak.conf
+sudo sed -i "s/127.0.0.1/$LOCAL_IP/" /etc/riak/riak_shell.config
 
 echo "Starting Riak..."
 sudo riak start
