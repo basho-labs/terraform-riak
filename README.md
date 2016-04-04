@@ -6,7 +6,7 @@ terraform-riak allows you to provision a Riak KV or a Riak TS cluster on AWS wit
 
 ### Configure AWS Access
 
-You will need to create an [AWS SSH key pair](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html) as well as a set of [access keys](http://docs.aws.amazon.com/general/latest/gr/managing-aws-access-keys.html).
+You will need to create an [AWS SSH key pair](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html) as well as a set of [access keys](http://docs.aws.amazon.com/general/latest/gr/managing-aws-access-keys.html). Please note that AWS SSH keys are region-specific, and that `terraform-riak` defaults to the `US-East (N. Virginia)` region.
 
 Set the following environment variables accordingly:
 
@@ -37,6 +37,8 @@ $ vagrant up
 $ vagrant ssh
 ```
 
+Verify that your AWS credentials and access keys have been properly set in `aws/global.tf` (scroll to the bottom).
+
 ### Non-Vagrant local environment
 
 Use the relevant bootstrap script as a reference for the required dependencies or just run it as-is:
@@ -52,7 +54,7 @@ If you opt *not* to run one of the bootstrap scripts directly, you will need to 
 
 ## Usage
 
-Create working subdirectories for your cluster and client(s)
+Create `working` subdirectories for your cluster and client(s)
 
 ```bash
 $ mkdir -p working/cluster working/clients
@@ -112,7 +114,7 @@ $ terraform destroy ../../aws/clients
 
 ## Riak TS sample data & queries
 
-The Riak client config downloads a sample time series data file and includes example Python scripts to both load and query the data. To run the examples, first SSH in to your client instance:
+The Riak client config downloads a sample time series data file (containing traffic data), and includes example Python scripts to both load and query the data. To run the examples, first SSH in to your client instance:
 
 ```bash
 $ ssh -i [PATH_TO_AWS_SSH_KEY] ubuntu@[CLIENT_IP]
