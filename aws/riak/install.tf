@@ -21,7 +21,7 @@ resource "aws_instance" "primary" {
 
     provisioner "remote-exec" {
         scripts = [
-            "${path.module}/bootstrap-${lookup(var.platform_base, var.platform)}.sh",
+            "${path.module}/../../scripts/terraform/riak/bootstrap-${lookup(var.platform_base, var.platform)}.sh",
         ]
     }
 
@@ -55,8 +55,8 @@ resource "aws_instance" "secondary" {
 
     provisioner "remote-exec" {
         scripts = [
-            "${path.module}/bootstrap-${lookup(var.platform_base, var.platform)}.sh",
-	    "${path.module}/join.sh",
+            "${path.module}/../../scripts/terraform/riak/bootstrap-${lookup(var.platform_base, var.platform)}.sh",
+	    "${path.module}/../../scripts/terraform/riak/join.sh",
         ]
     }
 
@@ -88,9 +88,9 @@ resource "aws_instance" "final" {
 
     provisioner "remote-exec" {
         scripts = [
-            "${path.module}/bootstrap-${lookup(var.platform_base, var.platform)}.sh",
-	    "${path.module}/join.sh",
-	    "${path.module}/cluster.sh",
+            "${path.module}/../../scripts/terraform/riak/bootstrap-${lookup(var.platform_base, var.platform)}.sh",
+	    "${path.module}/../../scripts/terraform/riak/join.sh",
+	    "${path.module}/../../scripts/terraform/riak/cluster.sh",
         ]
     }
 

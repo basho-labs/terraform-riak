@@ -16,7 +16,7 @@ resource "aws_instance" "server" {
 
     provisioner "remote-exec" {
         scripts = [
-            "${path.module}/bootstrap-${lookup(var.platform_base, var.platform)}.sh",
+            "${path.module}/../../scripts/terraform/clients/bootstrap-${lookup(var.platform_base, var.platform)}.sh",
         ]
     }
 
