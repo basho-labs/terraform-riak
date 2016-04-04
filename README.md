@@ -48,6 +48,8 @@ $ bash bootstrap-ubuntu.sh
 $ PATH=$PATH:$PWD
 ```
 
+If you opt *not* to run one of the bootstrap scripts directly, you will need to populate the AWS configs in `aws/global.tf` directly.
+
 ## Usage
 
 Create working subdirectories for your cluster and client(s)
