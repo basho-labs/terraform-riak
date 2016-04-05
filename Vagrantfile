@@ -13,6 +13,8 @@ Vagrant.configure(2) do |config|
       bootstrap_file = "bootstrap-rhel.sh"
   end
 
+  config.vm.synced_folder "scripts/", "/home/vagrant/scripts"
+
   if ENV['PROVIDER'] == 'AWS'
       config.vm.provision "shell", path: "scripts/vagrant/" + bootstrap_file, args: ["AWS", "#{ENV['KEY_PATH']}", "#{ENV['AWS_ACCESS_KEY']}", "#{ENV['AWS_SECRET_KEY']}"]
       config.vm.synced_folder "aws/", "/home/vagrant/aws"

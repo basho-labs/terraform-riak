@@ -10,7 +10,7 @@ resource "digitalocean_droplet" "server" {
     connection {
         user = "${lookup(var.user, var.platform)}"
         type = "ssh"
-        key_file = "${var.key_path}"
+        key_file = "${var.pvt_key}"
         timeout = "2m"
     }
 

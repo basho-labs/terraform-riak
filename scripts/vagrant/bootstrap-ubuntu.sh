@@ -3,11 +3,14 @@ set -e
 
 if [ -n "$1" ]; then
   PROVIDER=$1
+  VAGRANT_OS="UBUNTU"
   if [ $PROVIDER == "AWS" ]; then
     KEY_PATH=$2
     AWS_ACCESS_KEY=$3
     AWS_SECRET_KEY=$4
   elif [ $PROVIDER == "DIGITAL_OCEAN" ]; then
+    echo "provider: Digital Ocean"
+    echo $PROVIDER
     DO_TOKEN=$2
     DO_PUB_KEY_PATH=$3
     DO_PVT_KEY_PATH=$4
@@ -46,11 +49,6 @@ if [ $PROVIDER == "AWS" ]; then
   sed -i "62s~.*~    default = \"$AWS_SECRET_KEY\"~" $PWD/aws/global.tf
 
 elif [ $PROVIDER == "DIGITAL_OCEAN" ]; then
-
-  DO_TOKEN=$2
-  DO_PUB_KEY_PATH=$3
-  DO_PVT_KEY_PATH=$4
-  DO_FINGERPRINT=$5
 
   echo "Updating Digital Ocean configs..."
 

@@ -26,7 +26,7 @@ variable "user" {
 	ubuntu14 = "root"
 	debian6 = "root"
 	debian7 = "root"
-    
+    }    
 }
 
 variable "image" {
@@ -41,22 +41,22 @@ variable "image" {
 }
 
 variable "token" {
-    default = "36e740c26e5d835c8df880c254d3aadf12341197673860845071ba872961e17e"
+    default = ""
     description = "Digital Ocean API token."
 }
 
 variable "pub_key" {
-    default = "/home/vagrant/.ssh/basho-do.pub"
+    default = ""
     description = "Path to the public key."
 }
 
 variable "pvt_key" {
-    default = "/home/vagrant/.ssh/basho-do"
+    default = ""
     description = "Path to the private key."
 }
 
 variable "ssh_fingerprint" {
-    default = "f5:2d:4a:54:c1:8f:71:ec:13:75:55:12:c6:8e:fb:0f"
+    default = ""
     description = "SSH key fingerprint."
 }
 

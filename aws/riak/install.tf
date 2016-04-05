@@ -20,6 +20,12 @@ resource "aws_instance" "primary" {
     }
 
     provisioner "remote-exec" {
+        inline = [
+            "echo 'AWS' > /tmp/provider",
+        ]
+    }
+
+    provisioner "remote-exec" {
         scripts = [
             "${path.module}/../../scripts/terraform/riak/bootstrap-${lookup(var.platform_base, var.platform)}.sh",
         ]
@@ -54,6 +60,12 @@ resource "aws_instance" "secondary" {
     }
 
     provisioner "remote-exec" {
+        inline = [
+            "echo 'AWS' > /tmp/provider",
+        ]
+    }
+
+    provisioner "remote-exec" {
         scripts = [
             "${path.module}/../../scripts/terraform/riak/bootstrap-${lookup(var.platform_base, var.platform)}.sh",
 	    "${path.module}/../../scripts/terraform/riak/join.sh",
@@ -83,6 +95,12 @@ resource "aws_instance" "final" {
         inline = [
             "echo ${aws_instance.primary.private_ip} > /tmp/primary_ip",
             "echo ${lookup(var.package, concat(var.product_version, "-", var.platform))} > /tmp/package",
+        ]
+    }
+
+    provisioner "remote-exec" {
+        inline = [
+            "echo 'AWS' > /tmp/provider",
         ]
     }
 

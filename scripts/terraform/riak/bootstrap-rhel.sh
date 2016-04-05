@@ -1,8 +1,12 @@
 #!/bin/bash
 set -e
 
-# Set the local private ip
-LOCAL_IP=$(curl http://instance-data/latest/meta-data/local-ipv4)
+PROVIDER=$(cat /tmp/provider | tr -d '\n')
+if [ $PROVIDER == 'AWS' ]; then
+  LOCAL_IP=$(curl http://instance-data/latest/meta-data/local-ipv4)
+elif [ $PROVIDER == 'DIGITAL_OCEAN' ]; then
+  LOCAL_IP=$(curl -s http://169.254.169.254/metadata/v1/interfaces/private/0/ipv4/address)
+fi
 
 # Read the package path
 PACKAGE=$(cat /tmp/package | tr -d '\n')
