@@ -10,8 +10,7 @@ fi
 
 echo "Installing dependencies..."
 # sudo apt-get update
-sudo apt-get install -y wget unzip git python-setuptools
-sudo apt-get install -y gcc python-devel
+sudo apt-get install -y wget unzip git gcc libffi-dev libssl-dev python-dev python-setuptools
 sudo easy_install pip
 sudo pip install paramiko PyYAML Jinja2 httplib2 six
 
