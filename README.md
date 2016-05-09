@@ -64,12 +64,12 @@ $ mkdir -p working/cluster working/clients
 
 The `terraform apply` command takes the following variables for a Riak cluster config:
 
-* `product_version` (default: ts-1.2; options: ts-1.2, kv-2.1.3, kv-2.0.6)
+* `product_version` (default: ts-1.3; options: ts-1.3, ts-1.2, kv-2.1.3, kv-2.0.6)
 * `platform` (default: ubuntu14; options: rhel6, rhel7, ubuntu12, ubuntu14, debian7)
 * `nodes` (default: 5; options: must be >= 3)
 * `instance_type` (default: t2.medium; options: any AWS instance type)
 
-The following command uses the default settings to provision a 5-node Riak TS 1.2 cluster using the Ubuntu 14 package:
+The following command uses the default settings to provision a 5-node Riak TS 1.3 cluster using the Ubuntu 14 package:
 
 ```bash
 $ cd working/cluster
