@@ -24,6 +24,19 @@ $ export AWS_ACCESS_KEY=AKIAI3MEITMDDTB00000
 $ export AWS_SECRET_KEY=b/keH4gFgERz12K3Eai7Q+zGZG8PJ1f4Oy100000
 ```
 
+### Check your user and instance configuration on AWS
+
+Terraform swallows error messages - so you get something like "doesn't work, meh" so it is best to ensure that your AWS user and security stuff is correct and lets you connect to boxes before trying to use terraform.
+
+You need to set up a user:
+![User Setup](./images/User_setup.png)
+
+Give that user access to do stuff on the box with a security policy - AmazonEC2FullAccess is the brute force one:
+![Policy Access](./images/PolicyAccess-to-images.png)
+
+But you also need to 'wire up' the instances to make them visible to the outside world via Security Groups:
+![Security Groups](./images/SecurityGroup-to-run-instances-in.png)
+
 ### Vagrant local environment
 
 The repo includes a Vagrantfile for your convenience. The OS used by Vagrant can be set using the `VAGRANT_OS` environment variable (set to `UBUNTU` or `CENTOS`).
