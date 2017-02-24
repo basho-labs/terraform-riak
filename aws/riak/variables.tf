@@ -32,6 +32,9 @@ variable "package" {
 	ts-1.3-ubuntu14 = "https://s3.amazonaws.com/downloads.basho.com/riak_ts/1.3/1.3.0/ubuntu/trusty/riak-ts_1.3.0-1_amd64.deb"
 	ts-1.3-debian7 = "https://s3.amazonaws.com/downloads.basho.com/riak_ts/1.3/1.3.0/debian/7/riak-ts_1.3.0-1_amd64.deb"
 
+        ts-1.5.1-ubuntu14 = "https://s3.amazonaws.com/downloads.basho.com/riak_ts/1.5/1.5.1/ubuntu/trusty/riak-ts_1.5.1-1_amd64.deb"
+
+
     }
     description = "Per product/version/platform package paths."
 }

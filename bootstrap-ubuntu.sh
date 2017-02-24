@@ -10,9 +10,11 @@ fi
 
 echo "Installing dependencies..."
 sudo apt-get update
-sudo apt-get install -y wget unzip git gcc libffi-dev libssl-dev python-dev python-setuptools
+sudo apt-get install -y wget unzip git gcc libffi-dev libssl-dev python-dev python-setuptools python-pip
 sudo easy_install pip
-sudo pip install paramiko PyYAML Jinja2 httplib2 six
+sudo pip install six
+sudo pip install --upgrade six
+sudo pip install paramiko PyYAML Jinja2 httplib2
 
 echo "Installing Terraform..."
 wget https://releases.hashicorp.com/terraform/0.6.14/terraform_0.6.14_linux_amd64.zip
